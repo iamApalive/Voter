@@ -1,0 +1,76 @@
+<!-- app/templates/admin/polls/polls.html -->
+
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}polls{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">Polls</h1>
+        {% if polls %}
+          <hr class="intro-divider">
+          <div class="center">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="15%"> Name </th>
+                  <th width="40%"> Description </th>
+                  <th width="15%"> Voter Count </th>
+                  <th width="13%"> Edit </th>
+                  <th width="15%"> Delete </th>
+                  <th width="15%"> Result </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for poll in polls %}
+                <tr>
+                  <td> {{ poll.name }} </td>
+                  <td> {{ poll.description }} </td>
+                  <td>
+                    {% if poll.employees %}
+                      {{ poll.employees.count() }}
+                    {% else %}
+                      0
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a href="{{ url_for('admin.edit_poll', id=poll.id) }}">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{{ url_for('admin.delete_poll', id=poll.id) }}">
+                      <i class="fa fa-trash"></i> Delete
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{{ url_for('admin.poll_results', id=poll.id) }}">
+                      <i class="fa fa-flag"></i> Result
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align: center">
+        {% else %}
+          <div style="text-align: center">
+            <h3> No polls have been added. </h3>
+            <hr class="intro-divider">
+        {% endif %}
+          <a href="{{ url_for('admin.add_poll') }}" class="btn btn-default btn-lg">
+            <i class="fa fa-plus"></i>
+            Add Poll
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!-- app/templates/admin/voters/voters.html -->
+
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Votes{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">Votes</h1>
+        {% if votes %}
+          <hr class="intro-divider">
+          <div class="center">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="15%"> Vote </th>
+                  <th width="30%"> Poll </th>
+                  <th width="30%"> Voter </th>
+                  <th width="15%"> Assign </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for vote in votes %}
+                    <tr>
+                      <td> {{ vote.id }}  </td>
+                      <td>
+                        {% if vote.poll %}
+                          {{ vote.poll.name }}
+                        {% else %}
+                          -
+                        {% endif %}
+                      </td>
+                      <td>
+                        {% if vote.voter %}
+                          {{ vote.voter.username }}
+                        {% else %}
+                          -
+                        {% endif %}
+                      </td>
+                      <td>
+                          <<a href="{{ url_for('admin.vote_details', id=vote.id) }}">
+                          <i class="fa fa-user-plus"></i> Details
+                        </a>
+                      </td>
+                    </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

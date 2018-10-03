@@ -1,0 +1,32 @@
+<!-- app/templates/admin/roles/role.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block head %}
+<script>
+       $('.daychecks').on('change', function() {
+            $('.daychecks').not(this).prop('checked',false);
+    });
+    </script>
+{%endblock%}
+{% block body %}
+
+
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            <form action="{{ url_for('home.voting',id=current_user.id) }}" method="POST">
+                {%for candidate in electorate%}
+                <input type="radio" name="field" value={{ candidate }}> {{ candidate }}<br>
+            {% endfor %}
+                <input type="radio" name="field" value="NOTA"> NOTA <br>
+            <input type="submit" value="Vote" />
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
